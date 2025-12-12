@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a {
+            color: rgb(0, 255, 81);
+        }
+        body {
+            text-align: Center;
+            font-family: 'comic sans', cursive;
+            color: rgb(0, 255, 81);
+            padding: 20px;
+            background-image: url(../Images/webappbg.webp);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .Textbox {
+            background-color: black;   
+        }
+        .buttoncenter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;         
+        }
+        .input-group {
+            display: flex; 
+            gap: 10px; /* controls the small space between them */
+        }
+        input, button {
+            background-color: black;
+            color: rgb(0, 255, 81);
+            font-size: 18px;
+            padding: 20px;
+            margin: 20px auto;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="Textbox">
+        <a href="index.html">Scratch Page</a>
+        <h1>All Numbers Lead To 4</h1>
+        <p>All numbers in this box turn into 4. Input a number between 0 and 999, keep clicking go, and see what happens. Their is a pattern. Pay attention closely and you just might figure it out!</p>
+    </div>
+    
+    <div class="buttoncenter">
+        <div class="input-group">
+            <input type="number" id="numberInput" min="0">
+            <button onclick="countCharacters()">Go!</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+    
+
+    
+
+    <script>
+function numberToWords(num) {
+    const ones = ["","one","two","three","four","five","six","seven","eight","nine"];
+    const teens = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+    const tens = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+
+    if (num === 0) return "zero";
+
+    let word = "";
+
+    if (Math.floor(num / 1000) > 0) {
+        word += ones[Math.floor(num/1000)] + " thousand ";
+        num %= 1000;
+    }
+    if (Math.floor(num / 100) > 0) {
+        word += ones[Math.floor(num/100)] + " hundred ";
+        num %= 100;
+    }
+    if (num >= 20) {
+        word += tens[Math.floor(num/10)] + " ";
+        num %= 10;
+    } else if (num >= 10) {
+        word += teens[num-10] + " ";
+        num = 0;
+    }
+    if (num > 0) {
+        word += ones[num] + " ";
+    }
+
+    return word.trim();
+}
+
+function countCharacters() {
+    const input = document.getElementById("numberInput").value;
+    if(input === "") {
+        document.getElementById("result").innerText = "Please enter a number";
+        return;
+    }
+    if(input > 999) {
+        document.getElementById("result").innerText = "Invalid number";
+        return;
+    }
+
+    const number = parseInt(input);
+    const words = numberToWords(number);
+    const lettersOnly = words.replace(/\s+/g, ''); // remove spaces
+    const count = lettersOnly.length;
+
+    document.getElementById("result").textContent =
+    '';
+
+    document.getElementById("numberInput").value = count;
+}
+</script>
+</body>
+</html>
